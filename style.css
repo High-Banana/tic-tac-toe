@@ -1,0 +1,22 @@
+*{
+    box-sizing: border-box;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+}
+
+.square-box{
+    background-color: black;
+    height: 100px;
+    width: 100px;
+    border: 1px solid white;
+}
