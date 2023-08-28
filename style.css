@@ -1,22 +1,62 @@
-*{
+* {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-main{
+main {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.board{
+:root{
+    --square-size: 100px;
+    --marker-size: calc(var(--square-size)*0.7);
+}
+
+.board {
     display: grid;
     grid-template-columns: repeat(3, auto);
 }
 
-.square-box{
-    background-color: black;
-    height: 100px;
-    width: 100px;
-    border: 1px solid white;
+.square-box {
+    height: var(--square-size);
+    width: var(--square-size);
+    border: 2px solid black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.square-box:nth-child(1),
+.square-box:nth-child(2),
+.square-box:nth-child(3) {
+    border-top: none;
+}
+
+.square-box:nth-child(3n+1) {
+    border-left: none;
+}
+
+.square-box:nth-child(3n) {
+    border-right: none;
+}
+
+.square-box:nth-child(7),
+.square-box:nth-child(8),
+.square-box:nth-child(9){
+    border-bottom: none;
+}
+
+/* .cross::after,
+.cross::before{
+    background-color: black;
+    width: var(--marker-size);
+    height: var(--marker-size);
+    position: absolute;
+}
+
+.cross::after */
