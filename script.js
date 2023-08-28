@@ -6,7 +6,6 @@ const gameBoard = (() => {
 
     const updateBoard = (index, currentMarker) => {
         _board[index] = currentMarker;
-        console.log(_board);
     }
 
     return { getBoard, updateBoard };
@@ -16,6 +15,13 @@ const gameBoard = (() => {
 const gameFlow = (() => {
     let currentMarker;
     let toggleCircle;
+
+    const startNewGame = () => {
+        toggleCircle = false;
+        for (let i = 0; i < gameBoard.getBoard().length; i++) {
+            gameBoard.updateBoard(i, "");
+        }
+    }
 
     const getCurrentMaker = () => currentMarker;
 
@@ -51,15 +57,7 @@ const gameFlow = (() => {
         return board.every(box => box !== "");
     }
 
-    const restartGame = (restart) => {
-        for (let i = 0; i < gameBoard.getBoard().length; i++) {
-            gameBoard.updateBoard(i, "");
-        }
-        console.log(gameBoard.getBoard());
-        console.log(currentMarker);
-    }
-
-    return { getCurrentMaker, swapTurn, checkWinner, checkTie, restartGame };
+    return { getCurrentMaker, swapTurn, checkWinner, checkTie, startNewGame };
 })();
 
 // Update DOM display
@@ -95,18 +93,16 @@ const displayController = (() => {
         }
     }
 
-    const clearDisplay = () => {
-        gameFlow.restartGame(true);
-        if (gameFlow.restartGame) {
-            endGamePopup.classList.remove("show");
-            squareBox.forEach((box) => {
-                box.classList.remove("cross");
-                box.classList.remove("circle");
-            });
-        }
+    const resetDisplay = () => {
+        gameFlow.startNewGame();
+        endGamePopup.classList.remove("show");
+        squareBox.forEach((box) => {
+            box.classList.remove("circle");
+            box.classList.remove("cross");
+        })
     }
 
-    return { displayMarker, displayGameResult, clearDisplay, getSquareBox };
+    return { displayMarker, displayGameResult, getSquareBox, resetDisplay };
 })();
 
 displayController.getSquareBox().forEach((box, index) => box.addEventListener("click", () => {
@@ -117,6 +113,5 @@ displayController.getSquareBox().forEach((box, index) => box.addEventListener("c
 const restartButton = document.querySelector(".restartButton");
 
 restartButton.addEventListener("click", () => {
-    gameFlow.restartGame();
-    displayController.clearDisplay();
+    displayController.resetDisplay();
 });
