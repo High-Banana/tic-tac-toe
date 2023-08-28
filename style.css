@@ -26,10 +26,13 @@ main {
     height: var(--square-size);
     width: var(--square-size);
     border: 2px solid black;
-    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.square-box:hover{
+    cursor: pointer;
 }
 
 .square-box:nth-child(1),
@@ -67,6 +70,11 @@ main {
 
 .cross::before {
     transform: rotate(-45deg);
+}
+
+.square-box.cross,
+.square-box.circle{
+    cursor: not-allowed;
 }
 
 .circle::after,
