@@ -55,7 +55,7 @@ main {
 .cross::before{
     content: "";
     background-color: black;
-    width: calc(var(--marker-size)*0.2);
+    width: calc(var(--marker-size)*0.17);
     height: var(--marker-size);
     position: absolute;
 }
@@ -66,4 +66,23 @@ main {
 
 .cross::before{
     transform: rotate(-45deg);
+}
+
+.circle::after,
+.circle::before{
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+}
+
+.circle::before{
+    background-color: black;
+    width: var(--marker-size);
+    height: var(--marker-size);
+}
+
+.circle::after{
+    width: calc(var(--marker-size)*0.7);
+    height: calc(var(--marker-size)*0.7);
+    background-color: white;
 }
