@@ -1,5 +1,3 @@
-const squareBox = document.querySelectorAll(".square-box");
-
 // Update board array only
 const gameBoard = (() => {
     const _board = new Array(9).fill("");
@@ -43,7 +41,7 @@ const gameFlow = (() => {
     const checkWinner = (board) => {
         for (let i = 0; i < _WINNING_COMBINATION.length; i++) {
             const [a, b, c] = _WINNING_COMBINATION[i];
-            if(board[a] && board[b] === board[c] && board[a] === board[c]){
+            if (board[a] && board[b] === board[c] && board[a] === board[c]) {
                 return true;
             }
         }
@@ -53,41 +51,72 @@ const gameFlow = (() => {
         return board.every(box => box !== "");
     }
 
-    return { getCurrentMaker, swapTurn, checkWinner, checkTie };
+    const restartGame = (restart) => {
+        for (let i = 0; i < gameBoard.getBoard().length; i++) {
+            gameBoard.updateBoard(i, "");
+        }
+        console.log(gameBoard.getBoard());
+        console.log(currentMarker);
+    }
+
+    return { getCurrentMaker, swapTurn, checkWinner, checkTie, restartGame };
 })();
 
 // Update DOM display
 const displayController = (() => {
+    const squareBox = document.querySelectorAll(".square-box");
     const board = gameBoard.getBoard();
     const endGamePopup = document.querySelector(".endGame-popup");
     const gameMessage = document.querySelector(".game-message");
-    
+
+    const getSquareBox = () => squareBox;
+
     const displayMarker = (event, index) => {
         gameFlow.swapTurn();
         gameBoard.updateBoard(index, gameFlow.getCurrentMaker());
         return event.classList.add(gameFlow.getCurrentMaker());
     }
 
-    const wonGame = (win) => {
-        if(win){
+    const getWinner = (winner) => {
+        if (winner) {
             const winner = gameFlow.getCurrentMaker() === "circle" ? "O" : "X";
             gameMessage.textContent = `${winner} won!`;
-        }else{
+        } else {
             gameMessage.textContent = "It's a draw!";
         }
         endGamePopup.classList.add("show");
     }
 
     const displayGameResult = () => {
-        if(gameFlow.checkWinner(board)){
-            wonGame(true);
-        }else if(gameFlow.checkTie(board)){
-            wonGame(false);
+        if (gameFlow.checkWinner(board)) {
+            getWinner(true);
+        } else if (gameFlow.checkTie(board)) {
+            getWinner(false);
         }
     }
-    
-    squareBox.forEach((box, index) => box.addEventListener("click", () => {
-        displayMarker(box, index);
-        displayGameResult();
-    }, { once: true }));
+
+    const clearDisplay = () => {
+        gameFlow.restartGame(true);
+        if (gameFlow.restartGame) {
+            endGamePopup.classList.remove("show");
+            squareBox.forEach((box) => {
+                box.classList.remove("cross");
+                box.classList.remove("circle");
+            });
+        }
+    }
+
+    return { displayMarker, displayGameResult, clearDisplay, getSquareBox };
 })();
+
+displayController.getSquareBox().forEach((box, index) => box.addEventListener("click", () => {
+    displayController.displayMarker(box, index);
+    displayController.displayGameResult();
+}, { once: true }));
+
+const restartButton = document.querySelector(".restartButton");
+
+restartButton.addEventListener("click", () => {
+    gameFlow.restartGame();
+    displayController.clearDisplay();
+});
