@@ -51,12 +51,19 @@ main {
     border-bottom: none;
 }
 
-/* .cross::after,
+.cross::after,
 .cross::before{
+    content: "";
     background-color: black;
-    width: var(--marker-size);
+    width: calc(var(--marker-size)*0.2);
     height: var(--marker-size);
     position: absolute;
 }
 
-.cross::after */
+.cross::after{
+    transform: rotate(45deg);
+}
+
+.cross::before{
+    transform: rotate(-45deg);
+}
