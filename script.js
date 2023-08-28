@@ -58,18 +58,31 @@ const gameFlow = (() => {
 
 // Update DOM display
 const displayController = (() => {
+    const board = gameBoard.getBoard();
+    const endGamePopup = document.querySelector(".endGame-popup");
+    const gameMessage = document.querySelector(".game-message");
+    
     const displayMarker = (event, index) => {
         gameFlow.swapTurn();
         gameBoard.updateBoard(index, gameFlow.getCurrentMaker());
         return event.classList.add(gameFlow.getCurrentMaker());
     }
 
-    const board = gameBoard.getBoard();
+    const wonGame = (win) => {
+        if(win){
+            const winner = gameFlow.getCurrentMaker() === "circle" ? "O" : "X";
+            gameMessage.textContent = `${winner} won!`;
+        }else{
+            gameMessage.textContent = "It's a draw!";
+        }
+        endGamePopup.classList.add("show");
+    }
+
     const displayGameResult = () => {
         if(gameFlow.checkWinner(board)){
-            console.log("winner");
-        }else if(gameFlow.checkTie(gameBoard.getBoard())){
-            console.log("It's a draw");
+            wonGame(true);
+        }else if(gameFlow.checkTie(board)){
+            wonGame(false);
         }
     }
     
