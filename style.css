@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 main {
@@ -11,7 +12,7 @@ main {
     height: 100vh;
 }
 
-:root{
+:root {
     --square-size: 100px;
     --marker-size: calc(var(--square-size)*0.7);
 }
@@ -47,12 +48,12 @@ main {
 
 .square-box:nth-child(7),
 .square-box:nth-child(8),
-.square-box:nth-child(9){
+.square-box:nth-child(9) {
     border-bottom: none;
 }
 
 .cross::after,
-.cross::before{
+.cross::before {
     content: "";
     background-color: black;
     width: calc(var(--marker-size)*0.17);
@@ -60,29 +61,69 @@ main {
     position: absolute;
 }
 
-.cross::after{
+.cross::after {
     transform: rotate(45deg);
 }
 
-.cross::before{
+.cross::before {
     transform: rotate(-45deg);
 }
 
 .circle::after,
-.circle::before{
+.circle::before {
     content: "";
     border-radius: 50%;
     position: absolute;
 }
 
-.circle::before{
+.circle::before {
     background-color: black;
     width: var(--marker-size);
     height: var(--marker-size);
 }
 
-.circle::after{
+.circle::after {
     width: calc(var(--marker-size)*0.7);
     height: calc(var(--marker-size)*0.7);
     background-color: white;
+}
+
+.endGame-popup {
+    background-color: rgb(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.game-message {
+    font-size: 4rem;
+}
+
+.restartButton {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    background-color: rgb(158, 158, 158);
+    border: none;
+    color: white;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.restartButton:hover{
+    transform: scale(1.05);
+    background-color: rgb(37, 37, 37);
+}
+
+.show{
+    display: flex;
 }
