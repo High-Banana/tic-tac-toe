@@ -5,6 +5,7 @@ const gameBoard = (() => {
     const getBoard = () => _board;
 
     const updateBoard = (index, currentMarker) => {
+        console.log(_board);
         _board[index] = currentMarker;
     }
 
@@ -70,6 +71,7 @@ const displayController = (() => {
     const getSquareBox = () => squareBox;
 
     const displayMarker = (event, index) => {
+        if(event.classList.contains("circle") || event.classList.contains("cross")) return;
         gameFlow.swapTurn();
         gameBoard.updateBoard(index, gameFlow.getCurrentMaker());
         return event.classList.add(gameFlow.getCurrentMaker());
@@ -108,7 +110,7 @@ const displayController = (() => {
 displayController.getSquareBox().forEach((box, index) => box.addEventListener("click", () => {
     displayController.displayMarker(box, index);
     displayController.displayGameResult();
-}, { once: true }));
+}));
 
 const restartButton = document.querySelector(".restartButton");
 
