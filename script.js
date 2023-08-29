@@ -5,7 +5,6 @@ const gameBoard = (() => {
     const getBoard = () => _board;
 
     const updateBoard = (index, currentMarker) => {
-        console.log(_board);
         _board[index] = currentMarker;
     }
 
@@ -17,14 +16,14 @@ const gameFlow = (() => {
     let currentMarker;
     let toggleCircle;
 
+    const getCurrentMaker = () => currentMarker;
+
     const startNewGame = () => {
         toggleCircle = false;
         for (let i = 0; i < gameBoard.getBoard().length; i++) {
             gameBoard.updateBoard(i, "");
         }
     }
-
-    const getCurrentMaker = () => currentMarker;
 
     const swapTurn = () => {
         toggleCircle = !toggleCircle;
@@ -112,8 +111,8 @@ displayController.getSquareBox().forEach((box, index) => box.addEventListener("c
     displayController.displayGameResult();
 }));
 
-const restartButton = document.querySelector(".restartButton");
+const restartButton = document.querySelectorAll(".restartButton");
 
-restartButton.addEventListener("click", () => {
+restartButton.forEach(button => button.addEventListener("click", () => {
     displayController.resetDisplay();
-});
+}));
